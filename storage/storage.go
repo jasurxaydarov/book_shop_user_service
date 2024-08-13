@@ -2,7 +2,7 @@ package storage
 
 import (
 	"github.com/jackc/pgx/v5"
-	"github.com/jasurxaydarov/book_shop/storage/postgres"
+	"github.com/jasurxaydarov/book_shop_user_service/storage/postgres"
 	"github.com/saidamir98/udevs_pkg/logger"
 )
 

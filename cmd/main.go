@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/jasurxaydarov/book_shop/genproto/book_shop"
-	"github.com/jasurxaydarov/book_shop/pkg/db"
-	"github.com/jasurxaydarov/book_shop/services"
-	"github.com/jasurxaydarov/book_shop/storage"
+	"github.com/jasurxaydarov/book_shop_user_service/genproto/user_service"
+	"github.com/jasurxaydarov/book_shop_user_service/pkg/db"
+	"github.com/jasurxaydarov/book_shop_user_service/services"
+	"github.com/jasurxaydarov/book_shop_user_service/storage"
 	"github.com/saidamir98/udevs_pkg/logger"
 	"google.golang.org/grpc"
 )
@@ -38,7 +38,7 @@ func main() {
 
 	server:=grpc.NewServer()
 
-	book_shop.RegisterUserServiceServer(server,service)
+	user_service.RegisterUserServiceServer(server,service)
 
 	log.Debug("server serve on :8000")
 

@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jasurxaydarov/book_shop/genproto/book_shop"
-	"github.com/jasurxaydarov/book_shop/storage"
+	"github.com/jasurxaydarov/book_shop_user_service/genproto/user_service"
+	"github.com/jasurxaydarov/book_shop_user_service/storage"
 )
 
 type UserService struct {
 	storage storage.StorageRepoI
-	book_shop.UnimplementedUserServiceServer
+	user_service.UnimplementedUserServiceServer
 }
 
 func NewUserService(storage storage.StorageRepoI) *UserService {
@@ -18,7 +18,7 @@ func NewUserService(storage storage.StorageRepoI) *UserService {
 	return &UserService{storage: storage}
 }
 
-func (u *UserService) CreateUser(ctx context.Context, req *book_shop.UserCreateReq) (*book_shop.User, error) {
+func (u *UserService) CreateUser(ctx context.Context, req *user_service.UserCreateReq) (*user_service.User, error) {
 
 	resp, err := u.storage.GetUserRepo().CreateUser(ctx, req)
 
@@ -29,7 +29,7 @@ func (u *UserService) CreateUser(ctx context.Context, req *book_shop.UserCreateR
 	return resp, nil
 }
 
-func (u *UserService) GetUser(ctx context.Context, req *book_shop.GetByIdReq) (*book_shop.User, error) {
+func (u *UserService) GetUser(ctx context.Context, req *user_service.GetByIdReq) (*user_service.User, error) {
 
 	resp, err := u.storage.GetUserRepo().GetUserById(ctx, req)
 
@@ -39,21 +39,21 @@ func (u *UserService) GetUser(ctx context.Context, req *book_shop.GetByIdReq) (*
 	}
 	return resp, nil
 }
-func (u *UserService) GetUsers(context.Context, *book_shop.GetListReq) (*book_shop.UserGetListResp, error) {
+func (u *UserService) GetUsers(context.Context, *user_service.GetListReq) (*user_service.UserGetListResp, error) {
 
 	return nil, nil
 }
-func (u *UserService) UpdateUser(context.Context, *book_shop.UserUpdateReq) (*book_shop.User, error) {
-
-	return nil, nil
-}
-
-func (u *UserService) DeleteUser(context.Context, *book_shop.DeleteReq) (*book_shop.Empty, error) {
+func (u *UserService) UpdateUser(context.Context, *user_service.UserUpdateReq) (*user_service.User, error) {
 
 	return nil, nil
 }
 
-func (u *UserService) CheckExists(ctx context.Context, req *book_shop.Common) (*book_shop.CommonResp, error) {
+func (u *UserService) DeleteUser(context.Context, *user_service.DeleteReq) (*user_service.Empty, error) {
+
+	return nil, nil
+}
+
+func (u *UserService) CheckExists(ctx context.Context, req *user_service.Common) (*user_service.CommonResp, error) {
 
 	resp, err := u.storage.GetUserRepo().IsExists(ctx,req)
 
@@ -66,7 +66,7 @@ func (u *UserService) CheckExists(ctx context.Context, req *book_shop.Common) (*
 }
 
 
-func (u *UserService)UserLogin(ctx context.Context,req *book_shop.UserLogIn) (*book_shop.Clamis, error){
+func (u *UserService)UserLogin(ctx context.Context,req *user_service.UserLogIn) (*user_service.Clamis, error){
 	
 	resp, err := u.storage.GetUserRepo().UserLogin(ctx,req)
 

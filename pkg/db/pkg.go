@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/jasurxaydarov/book_shop/config"
+	"github.com/jasurxaydarov/book_shop_user_service/config"
 )
 
 func ConnDB(ctx context.Context)(*pgx.Conn,error){

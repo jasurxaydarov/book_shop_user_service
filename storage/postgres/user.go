@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
-	"github.com/jasurxaydarov/book_shop/genproto/book_shop"
-	"github.com/jasurxaydarov/book_shop/pkg/db/helpers"
+	"github.com/jasurxaydarov/book_shop_user_service/genproto/user_service"
+	"github.com/jasurxaydarov/book_shop_user_service/pkg/db/helpers"
 	"github.com/saidamir98/udevs_pkg/logger"
 )
 
@@ -22,7 +22,7 @@ func NewUserRepo(db *pgx.Conn, log logger.LoggerI) UserRepoI {
 	return &UserRepo{db: db, log: log}
 }
 
-func (u *UserRepo) CreateUser(ctx context.Context, req *book_shop.UserCreateReq) (*book_shop.User, error) {
+func (u *UserRepo) CreateUser(ctx context.Context, req *user_service.UserCreateReq) (*user_service.User, error) {
 	u.log.Debug("aaaaaaaaaaaaaaaaa")
 	id := uuid.New()
 	query := `
@@ -56,7 +56,7 @@ func (u *UserRepo) CreateUser(ctx context.Context, req *book_shop.UserCreateReq)
 		return nil, err
 	}
 
-	resp, err := u.GetUserById(context.Background(), &book_shop.GetByIdReq{Id: id.String()})
+	resp, err := u.GetUserById(context.Background(), &user_service.GetByIdReq{Id: id.String()})
 
 	if err != nil {
 
@@ -67,9 +67,9 @@ func (u *UserRepo) CreateUser(ctx context.Context, req *book_shop.UserCreateReq)
 	return resp, nil
 }
 
-func (u *UserRepo) GetUserById(ctx context.Context, req *book_shop.GetByIdReq) (*book_shop.User, error) {
+func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq) (*user_service.User, error) {
 
-	var resp book_shop.User
+	var resp user_service.User
 	qury := `
 		SELECT 
 			user_id,
@@ -106,7 +106,7 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *book_shop.GetByIdReq) (
 	return &resp, nil
 }
 
-func (u *UserRepo) IsExists(ctx context.Context, req *book_shop.Common) (*book_shop.CommonResp, error) {
+func (u *UserRepo) IsExists(ctx context.Context, req *user_service.Common) (*user_service.CommonResp, error) {
 	var isExists bool
 
 	query := fmt.Sprintf("SELECT EXISTS (SELECT 1 FROM %s WHERE %s = '%s')", req.TableName, req.ColumnName, req.Expvalue)
@@ -115,19 +115,17 @@ func (u *UserRepo) IsExists(ctx context.Context, req *book_shop.Common) (*book_s
 
 	if err != nil {
 		u.log.Error("error on CheckExists", logger.Error(err))
-		return &book_shop.CommonResp{IsExists: false}, nil
+		return &user_service.CommonResp{IsExists: false}, nil
 	}
 
-	return &book_shop.CommonResp{IsExists: isExists}, nil
+	return &user_service.CommonResp{IsExists: isExists}, nil
 }
 
+func (u *UserRepo) UserLogin(ctx context.Context, req *user_service.UserLogIn) (*user_service.Clamis, error) {
 
+	var viwerId, gmail, hashPassword, userRole string
 
-func (u *UserRepo)UserLogin(ctx context.Context, req *book_shop.UserLogIn)(*book_shop.Clamis,error){
-
-	var viwerId,gmail,hashPassword,userRole string
-
-	query:=`
+	query := `
 		SELECT 
 			user_id,
 			email,
@@ -139,17 +137,16 @@ func (u *UserRepo)UserLogin(ctx context.Context, req *book_shop.UserLogIn)(*book
 			username =$1
 	`
 
-	err:=u.db.QueryRow(ctx,query,req.Username).Scan(&viwerId,&gmail,&hashPassword,&userRole)
+	err := u.db.QueryRow(ctx, query, req.Username).Scan(&viwerId, &gmail, &hashPassword, &userRole)
 
-	if err != nil{
-		return nil,err
+	if err != nil {
+		return nil, err
 	}
 
-	if !helpers.CompareHashPassword(hashPassword,req.Password){
-		return nil,errors.New("password is incorrect")
+	if !helpers.CompareHashPassword(hashPassword, req.Password) {
+		return nil, errors.New("password is incorrect")
 	}
 
-
-	return &book_shop.Clamis{UserId: viwerId,UserRole:userRole}, nil
+	return &user_service.Clamis{UserId: viwerId, UserRole: userRole}, nil
 
 }
