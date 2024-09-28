@@ -39,18 +39,35 @@ func (u *UserService) GetUser(ctx context.Context, req *user_service.GetByIdReq)
 	}
 	return resp, nil
 }
-func (u *UserService) GetUsers(context.Context, *user_service.GetListReq) (*user_service.UserGetListResp, error) {
+func (u *UserService) GetUsers(ctx context.Context,req *user_service.GetListReq) (*user_service.UserGetListResp, error) {
+	resp, err := u.storage.GetUserRepo().GetUsers(ctx, req)
 
-	return nil, nil
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return resp, nil
 }
-func (u *UserService) UpdateUser(context.Context, *user_service.UserUpdateReq) (*user_service.User, error) {
+func (u *UserService) UpdateUser(ctx context.Context,req *user_service.UserUpdateReq) (*user_service.User, error) {
+	resp, err := u.storage.GetUserRepo().UpdateUser(ctx, req)
 
-	return nil, nil
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return resp, nil
 }
 
-func (u *UserService) DeleteUser(context.Context, *user_service.DeleteReq) (*user_service.Empty, error) {
+func (u *UserService) DeleteUser(ctx context.Context,req *user_service.DeleteReq) (*user_service.Empty, error) {
+	resp, err := u.storage.GetUserRepo().DeleteUser(ctx, req)
 
-	return nil, nil
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	fmt.Println(resp)
+	return &user_service.Empty{}, nil
 }
 
 func (u *UserService) CheckExists(ctx context.Context, req *user_service.Common) (*user_service.CommonResp, error) {

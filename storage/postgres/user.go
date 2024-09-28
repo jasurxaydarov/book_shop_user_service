@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -23,7 +24,6 @@ func NewUserRepo(db *pgx.Conn, log logger.LoggerI) UserRepoI {
 }
 
 func (u *UserRepo) CreateUser(ctx context.Context, req *user_service.UserCreateReq) (*user_service.User, error) {
-	u.log.Debug("aaaaaaaaaaaaaaaaa")
 	id := uuid.New()
 	query := `
 		INSERT INTO
@@ -81,7 +81,7 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq
 		FROM 
 			users 
 		WHERE
-			user_id = $1
+			user_id = $1 and  deleted_at is null
 	`
 
 	err := u.db.QueryRow(
@@ -104,6 +104,130 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq
 	}
 
 	return &resp, nil
+}
+
+func (u *UserRepo) GetUsers(ctx context.Context, req *user_service.GetListReq) (*user_service.UserGetListResp, error) {
+
+	offset := (req.Page - 1) * req.Limit
+
+	var resp user_service.User
+
+	var res user_service.UserGetListResp
+	qury := `
+		SELECT 
+   			*
+		FROM 
+    		users
+		WHERE 
+    		deleted_at IS NULL
+		LIMIT $1 OFFSET $2;
+	`
+
+	row, err := u.db.Query(
+		ctx,
+		qury,
+		req.Limit,
+		offset,
+	)
+
+	if err != nil {
+
+		u.log.Error("err on db GetUsers", logger.Error(err))
+		return nil, err
+	}
+
+	for row.Next() {
+
+		row.Scan(
+			&resp.UserId,
+			&resp.Username,
+			&resp.Email,
+			&resp.Password,
+			&resp.Fullname,
+			&resp.CreatedAt,
+			&resp.UpdatedAt,
+			&resp.DeletedAt,
+			&resp.UserRole,
+		)
+
+		res.Users = append(res.Users, &resp)
+
+		res.Count++
+
+	}
+
+	return &res, nil
+}
+
+func (u *UserRepo) UpdateUser(ctx context.Context, req *user_service.UserUpdateReq) (*user_service.User, error) {
+
+	time := time.Now()
+	query := `
+		UPDATE
+			users
+		SET
+				username = $1,
+				email = $2, 
+				password = $3,
+				full_name = $4,
+				user_role = $5,
+				updated_at = $6
+		WHERE user_id = $7 and  deleted_at is null
+			`
+
+	_, err := u.db.Exec(
+		ctx,
+		query,
+
+		req.Username,
+		req.Email,
+		req.Password,
+		req.Fullname,
+		req.UserRole,
+		time,
+		req.UserId,
+	)
+	if err != nil {
+
+		u.log.Error("err on db update", logger.Error(err))
+		return nil, err
+	}
+
+	resp, err := u.GetUserById(context.Background(), &user_service.GetByIdReq{Id: req.UserId})
+
+	if err != nil {
+
+		u.log.Error("err on db GetUserById", logger.Error(err))
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func (u *UserRepo) DeleteUser(ctx context.Context, req *user_service.DeleteReq) (string, error) {
+
+	delete := time.Now()
+	query := `
+		UPDATE
+			users
+		SET
+			deleted_at = $1
+		WHERE user_id = $2
+			`
+
+	_, err := u.db.Exec(
+		ctx,
+		query,
+		delete,
+		req.Id,
+	)
+	if err != nil {
+
+		u.log.Error("err on db CreateUser", logger.Error(err))
+		return "", err
+	}
+
+	return "succesfully deleted", nil
 }
 
 func (u *UserRepo) IsExists(ctx context.Context, req *user_service.Common) (*user_service.CommonResp, error) {
@@ -134,10 +258,29 @@ func (u *UserRepo) UserLogin(ctx context.Context, req *user_service.UserLogIn) (
 		FROM
 			users
 		WHERE	
-			username =$1
+			username =$1 
 	`
 
 	err := u.db.QueryRow(ctx, query, req.Username).Scan(&viwerId, &gmail, &hashPassword, &userRole)
+
+	if err != nil {
+		return nil, err
+	}
+
+	up := `
+		UPDATE
+			users
+		SET
+			deleted_at =Null
+		WHERE
+			user_id = $1
+			`
+
+	_, err = u.db.Exec(
+		ctx,
+		up,
+		viwerId,
+	)
 
 	if err != nil {
 		return nil, err
