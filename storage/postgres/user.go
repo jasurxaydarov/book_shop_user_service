@@ -77,11 +77,15 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq
 				email, 
 				password,
 				full_name,
-				user_role
+				user_role,
+				created_at,
+				updated_at
 		FROM 
 			users 
 		WHERE
-			user_id = $1 and  deleted_at is null
+			user_id = $1 
+		AND
+			deleted_at is null
 	`
 
 	err := u.db.QueryRow(
@@ -95,6 +99,8 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq
 		&resp.Password,
 		&resp.Fullname,
 		&resp.UserRole,
+		&resp.CreatedAt,
+		&resp.UpdatedAt,
 	)
 
 	if err != nil {
@@ -150,9 +156,9 @@ func (u *UserRepo) GetUsers(ctx context.Context, req *user_service.GetListReq) (
 			&resp.UserRole,
 		)
 
+		res.Count++
 		res.Users = append(res.Users, &resp)
 
-		res.Count++
 
 	}
 
@@ -172,7 +178,10 @@ func (u *UserRepo) UpdateUser(ctx context.Context, req *user_service.UserUpdateR
 				full_name = $4,
 				user_role = $5,
 				updated_at = $6
-		WHERE user_id = $7 and  deleted_at is null
+		WHERE 
+				user_id = $7 
+		AND  
+				deleted_at is null
 			`
 
 	_, err := u.db.Exec(
