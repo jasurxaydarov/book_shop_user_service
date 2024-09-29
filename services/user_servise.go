@@ -39,7 +39,7 @@ func (u *UserService) GetUser(ctx context.Context, req *user_service.GetByIdReq)
 	}
 	return resp, nil
 }
-func (u *UserService) GetUsers(ctx context.Context,req *user_service.GetListReq) (*user_service.UserGetListResp, error) {
+func (u *UserService) GetUsers(ctx context.Context, req *user_service.GetListReq) (*user_service.UserGetListResp, error) {
 	resp, err := u.storage.GetUserRepo().GetUsers(ctx, req)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func (u *UserService) GetUsers(ctx context.Context,req *user_service.GetListReq)
 	}
 	return resp, nil
 }
-func (u *UserService) UpdateUser(ctx context.Context,req *user_service.UserUpdateReq) (*user_service.User, error) {
+func (u *UserService) UpdateUser(ctx context.Context, req *user_service.UserUpdateReq) (*user_service.User, error) {
 	resp, err := u.storage.GetUserRepo().UpdateUser(ctx, req)
 
 	if err != nil {
@@ -58,7 +58,7 @@ func (u *UserService) UpdateUser(ctx context.Context,req *user_service.UserUpdat
 	return resp, nil
 }
 
-func (u *UserService) DeleteUser(ctx context.Context,req *user_service.DeleteReq) (*user_service.Empty, error) {
+func (u *UserService) DeleteUser(ctx context.Context, req *user_service.DeleteReq) (*user_service.Empty, error) {
 	resp, err := u.storage.GetUserRepo().DeleteUser(ctx, req)
 
 	if err != nil {
@@ -72,7 +72,7 @@ func (u *UserService) DeleteUser(ctx context.Context,req *user_service.DeleteReq
 
 func (u *UserService) CheckExists(ctx context.Context, req *user_service.Common) (*user_service.CommonResp, error) {
 
-	resp, err := u.storage.GetUserRepo().IsExists(ctx,req)
+	resp, err := u.storage.GetUserRepo().IsExists(ctx, req)
 
 	if err != nil {
 
@@ -82,10 +82,9 @@ func (u *UserService) CheckExists(ctx context.Context, req *user_service.Common)
 	return resp, nil
 }
 
+func (u *UserService) UserLogin(ctx context.Context, req *user_service.UserLogIn) (*user_service.Clamis, error) {
 
-func (u *UserService)UserLogin(ctx context.Context,req *user_service.UserLogIn) (*user_service.Clamis, error){
-	
-	resp, err := u.storage.GetUserRepo().UserLogin(ctx,req)
+	resp, err := u.storage.GetUserRepo().UserLogin(ctx, req)
 
 	if err != nil {
 

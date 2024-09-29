@@ -29,7 +29,7 @@ var file_service_product_proto_rawDesc = []byte{
 	0x32, 0xa9, 0x0f, 0x0a, 0x0f, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x73, 0x65, 0x72,
 	0x76, 0x69, 0x63, 0x65, 0x12, 0x47, 0x0a, 0x0a, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x75,
 	0x74, 0x68, 0x12, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x43, 0x72, 0x65, 0x61, 0x74,
 	0x65, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x73,
 	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x12, 0x3f, 0x0a,
 	0x07, 0x47, 0x65, 0x74, 0x41, 0x75, 0x74, 0x68, 0x12, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x64, 0x75,
@@ -154,82 +154,83 @@ var file_service_product_proto_rawDesc = []byte{
 }
 
 var file_service_product_proto_goTypes = []any{
-	(*AuthorUpdateReq)(nil),      // 0: product_service.AuthorUpdateReq
+	(*AuthorCreateReq)(nil),      // 0: product_service.AuthorCreateReq
 	(*GetByIdReq)(nil),           // 1: product_service.GetByIdReq
 	(*GetListReq)(nil),           // 2: product_service.GetListReq
-	(*DeleteReq)(nil),            // 3: product_service.DeleteReq
-	(*CategoryCreateReq)(nil),    // 4: product_service.CategoryCreateReq
-	(*CategoryUpdateReq)(nil),    // 5: product_service.CategoryUpdateReq
-	(*BookCreateReq)(nil),        // 6: product_service.BookCreateReq
-	(*BookUpdateReq)(nil),        // 7: product_service.BookUpdateReq
-	(*OrderCreateReq)(nil),       // 8: product_service.OrderCreateReq
-	(*OrderUpdateReq)(nil),       // 9: product_service.OrderUpdateReq
-	(*OrderItemCreateReq)(nil),   // 10: product_service.OrderItemCreateReq
-	(*Author)(nil),               // 11: product_service.Author
-	(*AuthorGetListResp)(nil),    // 12: product_service.AuthorGetListResp
-	(*Empty)(nil),                // 13: product_service.Empty
-	(*Category)(nil),             // 14: product_service.Category
-	(*CategoryGetListResp)(nil),  // 15: product_service.CategoryGetListResp
-	(*Book)(nil),                 // 16: product_service.Book
-	(*BookGetListResp)(nil),      // 17: product_service.BookGetListResp
-	(*Order)(nil),                // 18: product_service.Order
-	(*OrderGetListResp)(nil),     // 19: product_service.OrderGetListResp
-	(*OrderItem)(nil),            // 20: product_service.OrderItem
-	(*OrderItemGetListResp)(nil), // 21: product_service.OrderItemGetListResp
+	(*AuthorUpdateReq)(nil),      // 3: product_service.AuthorUpdateReq
+	(*DeleteReq)(nil),            // 4: product_service.DeleteReq
+	(*CategoryCreateReq)(nil),    // 5: product_service.CategoryCreateReq
+	(*CategoryUpdateReq)(nil),    // 6: product_service.CategoryUpdateReq
+	(*BookCreateReq)(nil),        // 7: product_service.BookCreateReq
+	(*BookUpdateReq)(nil),        // 8: product_service.BookUpdateReq
+	(*OrderCreateReq)(nil),       // 9: product_service.OrderCreateReq
+	(*OrderUpdateReq)(nil),       // 10: product_service.OrderUpdateReq
+	(*OrderItemCreateReq)(nil),   // 11: product_service.OrderItemCreateReq
+	(*Author)(nil),               // 12: product_service.Author
+	(*AuthorGetListResp)(nil),    // 13: product_service.AuthorGetListResp
+	(*Empty)(nil),                // 14: product_service.Empty
+	(*Category)(nil),             // 15: product_service.Category
+	(*CategoryGetListResp)(nil),  // 16: product_service.CategoryGetListResp
+	(*Book)(nil),                 // 17: product_service.Book
+	(*BookGetListResp)(nil),      // 18: product_service.BookGetListResp
+	(*Order)(nil),                // 19: product_service.Order
+	(*OrderGetListResp)(nil),     // 20: product_service.OrderGetListResp
+	(*OrderItem)(nil),            // 21: product_service.OrderItem
+	(*OrderItemGetListResp)(nil), // 22: product_service.OrderItemGetListResp
 }
 var file_service_product_proto_depIdxs = []int32{
-	0,  // 0: product_service.Product_service.CreateAuth:input_type -> product_service.AuthorUpdateReq
+	0,  // 0: product_service.Product_service.CreateAuth:input_type -> product_service.AuthorCreateReq
 	1,  // 1: product_service.Product_service.GetAuth:input_type -> product_service.GetByIdReq
 	2,  // 2: product_service.Product_service.GetAuths:input_type -> product_service.GetListReq
-	0,  // 3: product_service.Product_service.UpdateAuth:input_type -> product_service.AuthorUpdateReq
-	3,  // 4: product_service.Product_service.DeleteAuth:input_type -> product_service.DeleteReq
-	4,  // 5: product_service.Product_service.CreateCategory:input_type -> product_service.CategoryCreateReq
+	3,  // 3: product_service.Product_service.UpdateAuth:input_type -> product_service.AuthorUpdateReq
+	4,  // 4: product_service.Product_service.DeleteAuth:input_type -> product_service.DeleteReq
+	5,  // 5: product_service.Product_service.CreateCategory:input_type -> product_service.CategoryCreateReq
 	1,  // 6: product_service.Product_service.GetCategory:input_type -> product_service.GetByIdReq
 	2,  // 7: product_service.Product_service.GetCategories:input_type -> product_service.GetListReq
-	5,  // 8: product_service.Product_service.UpdateCategory:input_type -> product_service.CategoryUpdateReq
-	3,  // 9: product_service.Product_service.DeleteCategory:input_type -> product_service.DeleteReq
-	6,  // 10: product_service.Product_service.CreateBook:input_type -> product_service.BookCreateReq
+	6,  // 8: product_service.Product_service.UpdateCategory:input_type -> product_service.CategoryUpdateReq
+	4,  // 9: product_service.Product_service.DeleteCategory:input_type -> product_service.DeleteReq
+	7,  // 10: product_service.Product_service.CreateBook:input_type -> product_service.BookCreateReq
 	1,  // 11: product_service.Product_service.GetBook:input_type -> product_service.GetByIdReq
 	2,  // 12: product_service.Product_service.GetBooks:input_type -> product_service.GetListReq
-	7,  // 13: product_service.Product_service.UpdateBook:input_type -> product_service.BookUpdateReq
-	3,  // 14: product_service.Product_service.DeleteBook:input_type -> product_service.DeleteReq
-	8,  // 15: product_service.Product_service.CreateOrder:input_type -> product_service.OrderCreateReq
+	8,  // 13: product_service.Product_service.UpdateBook:input_type -> product_service.BookUpdateReq
+	4,  // 14: product_service.Product_service.DeleteBook:input_type -> product_service.DeleteReq
+	9,  // 15: product_service.Product_service.CreateOrder:input_type -> product_service.OrderCreateReq
 	1,  // 16: product_service.Product_service.GetOrder:input_type -> product_service.GetByIdReq
 	2,  // 17: product_service.Product_service.GetOrders:input_type -> product_service.GetListReq
-	9,  // 18: product_service.Product_service.Updateorder:input_type -> product_service.OrderUpdateReq
-	3,  // 19: product_service.Product_service.DeleteOrder:input_type -> product_service.DeleteReq
-	10, // 20: product_service.Product_service.CreateOrdered_Item:input_type -> product_service.OrderItemCreateReq
+	10, // 18: product_service.Product_service.Updateorder:input_type -> product_service.OrderUpdateReq
+	4,  // 19: product_service.Product_service.DeleteOrder:input_type -> product_service.DeleteReq
+	11, // 20: product_service.Product_service.CreateOrdered_Item:input_type -> product_service.OrderItemCreateReq
 	1,  // 21: product_service.Product_service.GetOrdered_Item:input_type -> product_service.GetByIdReq
 	1,  // 22: product_service.Product_service.GetOrdered_ItemByOrderId:input_type -> product_service.GetByIdReq
 	2,  // 23: product_service.Product_service.GetOrdered_Items:input_type -> product_service.GetListReq
-	10, // 24: product_service.Product_service.UpdateOrdered_Item:input_type -> product_service.OrderItemCreateReq
-	3,  // 25: product_service.Product_service.DeleteOrdered_Item:input_type -> product_service.DeleteReq
-	11, // 26: product_service.Product_service.CreateAuth:output_type -> product_service.Author
-	11, // 27: product_service.Product_service.GetAuth:output_type -> product_service.Author
-	12, // 28: product_service.Product_service.GetAuths:output_type -> product_service.AuthorGetListResp
-	11, // 29: product_service.Product_service.UpdateAuth:output_type -> product_service.Author
-	13, // 30: product_service.Product_service.DeleteAuth:output_type -> product_service.Empty
-	14, // 31: product_service.Product_service.CreateCategory:output_type -> product_service.Category
-	14, // 32: product_service.Product_service.GetCategory:output_type -> product_service.Category
-	15, // 33: product_service.Product_service.GetCategories:output_type -> product_service.CategoryGetListResp
-	14, // 34: product_service.Product_service.UpdateCategory:output_type -> product_service.Category
-	13, // 35: product_service.Product_service.DeleteCategory:output_type -> product_service.Empty
-	16, // 36: product_service.Product_service.CreateBook:output_type -> product_service.Book
-	16, // 37: product_service.Product_service.GetBook:output_type -> product_service.Book
-	17, // 38: product_service.Product_service.GetBooks:output_type -> product_service.BookGetListResp
-	16, // 39: product_service.Product_service.UpdateBook:output_type -> product_service.Book
-	13, // 40: product_service.Product_service.DeleteBook:output_type -> product_service.Empty
-	18, // 41: product_service.Product_service.CreateOrder:output_type -> product_service.Order
-	18, // 42: product_service.Product_service.GetOrder:output_type -> product_service.Order
-	19, // 43: product_service.Product_service.GetOrders:output_type -> product_service.OrderGetListResp
-	18, // 44: product_service.Product_service.Updateorder:output_type -> product_service.Order
-	13, // 45: product_service.Product_service.DeleteOrder:output_type -> product_service.Empty
-	20, // 46: product_service.Product_service.CreateOrdered_Item:output_type -> product_service.OrderItem
-	20, // 47: product_service.Product_service.GetOrdered_Item:output_type -> product_service.OrderItem
-	21, // 48: product_service.Product_service.GetOrdered_ItemByOrderId:output_type -> product_service.OrderItemGetListResp
-	21, // 49: product_service.Product_service.GetOrdered_Items:output_type -> product_service.OrderItemGetListResp
-	20, // 50: product_service.Product_service.UpdateOrdered_Item:output_type -> product_service.OrderItem
-	13, // 51: product_service.Product_service.DeleteOrdered_Item:output_type -> product_service.Empty
+	11, // 24: product_service.Product_service.UpdateOrdered_Item:input_type -> product_service.OrderItemCreateReq
+	4,  // 25: product_service.Product_service.DeleteOrdered_Item:input_type -> product_service.DeleteReq
+	12, // 26: product_service.Product_service.CreateAuth:output_type -> product_service.Author
+	12, // 27: product_service.Product_service.GetAuth:output_type -> product_service.Author
+	13, // 28: product_service.Product_service.GetAuths:output_type -> product_service.AuthorGetListResp
+	12, // 29: product_service.Product_service.UpdateAuth:output_type -> product_service.Author
+	14, // 30: product_service.Product_service.DeleteAuth:output_type -> product_service.Empty
+	15, // 31: product_service.Product_service.CreateCategory:output_type -> product_service.Category
+	15, // 32: product_service.Product_service.GetCategory:output_type -> product_service.Category
+	16, // 33: product_service.Product_service.GetCategories:output_type -> product_service.CategoryGetListResp
+	15, // 34: product_service.Product_service.UpdateCategory:output_type -> product_service.Category
+	14, // 35: product_service.Product_service.DeleteCategory:output_type -> product_service.Empty
+	17, // 36: product_service.Product_service.CreateBook:output_type -> product_service.Book
+	17, // 37: product_service.Product_service.GetBook:output_type -> product_service.Book
+	18, // 38: product_service.Product_service.GetBooks:output_type -> product_service.BookGetListResp
+	17, // 39: product_service.Product_service.UpdateBook:output_type -> product_service.Book
+	14, // 40: product_service.Product_service.DeleteBook:output_type -> product_service.Empty
+	19, // 41: product_service.Product_service.CreateOrder:output_type -> product_service.Order
+	19, // 42: product_service.Product_service.GetOrder:output_type -> product_service.Order
+	20, // 43: product_service.Product_service.GetOrders:output_type -> product_service.OrderGetListResp
+	19, // 44: product_service.Product_service.Updateorder:output_type -> product_service.Order
+	14, // 45: product_service.Product_service.DeleteOrder:output_type -> product_service.Empty
+	21, // 46: product_service.Product_service.CreateOrdered_Item:output_type -> product_service.OrderItem
+	21, // 47: product_service.Product_service.GetOrdered_Item:output_type -> product_service.OrderItem
+	22, // 48: product_service.Product_service.GetOrdered_ItemByOrderId:output_type -> product_service.OrderItemGetListResp
+	22, // 49: product_service.Product_service.GetOrdered_Items:output_type -> product_service.OrderItemGetListResp
+	21, // 50: product_service.Product_service.UpdateOrdered_Item:output_type -> product_service.OrderItem
+	14, // 51: product_service.Product_service.DeleteOrdered_Item:output_type -> product_service.Empty
 	26, // [26:52] is the sub-list for method output_type
 	0,  // [0:26] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name

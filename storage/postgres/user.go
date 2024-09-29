@@ -191,7 +191,7 @@ func (u *UserRepo) UpdateUser(ctx context.Context, req *user_service.UserUpdateR
 		req.Username,
 		req.Email,
 		req.Password,
-		req.Fullname,
+		req.FullName,
 		req.UserRole,
 		time,
 		req.UserId,

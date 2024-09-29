@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductServiceClient interface {
-	CreateAuth(ctx context.Context, in *AuthorUpdateReq, opts ...grpc.CallOption) (*Author, error)
+	CreateAuth(ctx context.Context, in *AuthorCreateReq, opts ...grpc.CallOption) (*Author, error)
 	GetAuth(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*Author, error)
 	GetAuths(ctx context.Context, in *GetListReq, opts ...grpc.CallOption) (*AuthorGetListResp, error)
 	UpdateAuth(ctx context.Context, in *AuthorUpdateReq, opts ...grpc.CallOption) (*Author, error)
@@ -58,7 +58,7 @@ func NewProductServiceClient(cc grpc.ClientConnInterface) ProductServiceClient {
 	return &productServiceClient{cc}
 }
 
-func (c *productServiceClient) CreateAuth(ctx context.Context, in *AuthorUpdateReq, opts ...grpc.CallOption) (*Author, error) {
+func (c *productServiceClient) CreateAuth(ctx context.Context, in *AuthorCreateReq, opts ...grpc.CallOption) (*Author, error) {
 	out := new(Author)
 	err := c.cc.Invoke(ctx, "/product_service.Product_service/CreateAuth", in, out, opts...)
 	if err != nil {
@@ -296,7 +296,7 @@ func (c *productServiceClient) DeleteOrdered_Item(ctx context.Context, in *Delet
 // All implementations must embed UnimplementedProductServiceServer
 // for forward compatibility
 type ProductServiceServer interface {
-	CreateAuth(context.Context, *AuthorUpdateReq) (*Author, error)
+	CreateAuth(context.Context, *AuthorCreateReq) (*Author, error)
 	GetAuth(context.Context, *GetByIdReq) (*Author, error)
 	GetAuths(context.Context, *GetListReq) (*AuthorGetListResp, error)
 	UpdateAuth(context.Context, *AuthorUpdateReq) (*Author, error)
@@ -329,7 +329,7 @@ type ProductServiceServer interface {
 type UnimplementedProductServiceServer struct {
 }
 
-func (UnimplementedProductServiceServer) CreateAuth(context.Context, *AuthorUpdateReq) (*Author, error) {
+func (UnimplementedProductServiceServer) CreateAuth(context.Context, *AuthorCreateReq) (*Author, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAuth not implemented")
 }
 func (UnimplementedProductServiceServer) GetAuth(context.Context, *GetByIdReq) (*Author, error) {
@@ -421,7 +421,7 @@ func RegisterProductServiceServer(s grpc.ServiceRegistrar, srv ProductServiceSer
 }
 
 func _ProductService_CreateAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AuthorUpdateReq)
+	in := new(AuthorCreateReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -433,7 +433,7 @@ func _ProductService_CreateAuth_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/product_service.Product_service/CreateAuth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).CreateAuth(ctx, req.(*AuthorUpdateReq))
+		return srv.(ProductServiceServer).CreateAuth(ctx, req.(*AuthorCreateReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
