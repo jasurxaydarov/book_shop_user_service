@@ -46,7 +46,7 @@ type ProductServiceClient interface {
 	GetOrdered_Item(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*OrderItem, error)
 	GetOrdered_ItemByOrderId(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*OrderItemGetListResp, error)
 	GetOrdered_Items(ctx context.Context, in *GetListReq, opts ...grpc.CallOption) (*OrderItemGetListResp, error)
-	UpdateOrdered_Item(ctx context.Context, in *OrderItemCreateReq, opts ...grpc.CallOption) (*OrderItem, error)
+	UpdateOrdered_Item(ctx context.Context, in *OrderItemUpdate, opts ...grpc.CallOption) (*OrderItem, error)
 	DeleteOrdered_Item(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
@@ -274,7 +274,7 @@ func (c *productServiceClient) GetOrdered_Items(ctx context.Context, in *GetList
 	return out, nil
 }
 
-func (c *productServiceClient) UpdateOrdered_Item(ctx context.Context, in *OrderItemCreateReq, opts ...grpc.CallOption) (*OrderItem, error) {
+func (c *productServiceClient) UpdateOrdered_Item(ctx context.Context, in *OrderItemUpdate, opts ...grpc.CallOption) (*OrderItem, error) {
 	out := new(OrderItem)
 	err := c.cc.Invoke(ctx, "/product_service.Product_service/UpdateOrdered_Item", in, out, opts...)
 	if err != nil {
@@ -320,7 +320,7 @@ type ProductServiceServer interface {
 	GetOrdered_Item(context.Context, *GetByIdReq) (*OrderItem, error)
 	GetOrdered_ItemByOrderId(context.Context, *GetByIdReq) (*OrderItemGetListResp, error)
 	GetOrdered_Items(context.Context, *GetListReq) (*OrderItemGetListResp, error)
-	UpdateOrdered_Item(context.Context, *OrderItemCreateReq) (*OrderItem, error)
+	UpdateOrdered_Item(context.Context, *OrderItemUpdate) (*OrderItem, error)
 	DeleteOrdered_Item(context.Context, *DeleteReq) (*Empty, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
@@ -401,7 +401,7 @@ func (UnimplementedProductServiceServer) GetOrdered_ItemByOrderId(context.Contex
 func (UnimplementedProductServiceServer) GetOrdered_Items(context.Context, *GetListReq) (*OrderItemGetListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrdered_Items not implemented")
 }
-func (UnimplementedProductServiceServer) UpdateOrdered_Item(context.Context, *OrderItemCreateReq) (*OrderItem, error) {
+func (UnimplementedProductServiceServer) UpdateOrdered_Item(context.Context, *OrderItemUpdate) (*OrderItem, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrdered_Item not implemented")
 }
 func (UnimplementedProductServiceServer) DeleteOrdered_Item(context.Context, *DeleteReq) (*Empty, error) {
@@ -853,7 +853,7 @@ func _ProductService_GetOrdered_Items_Handler(srv interface{}, ctx context.Conte
 }
 
 func _ProductService_UpdateOrdered_Item_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OrderItemCreateReq)
+	in := new(OrderItemUpdate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -865,7 +865,7 @@ func _ProductService_UpdateOrdered_Item_Handler(srv interface{}, ctx context.Con
 		FullMethod: "/product_service.Product_service/UpdateOrdered_Item",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).UpdateOrdered_Item(ctx, req.(*OrderItemCreateReq))
+		return srv.(ProductServiceServer).UpdateOrdered_Item(ctx, req.(*OrderItemUpdate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
