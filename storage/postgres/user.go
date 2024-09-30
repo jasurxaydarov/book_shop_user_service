@@ -73,13 +73,13 @@ func (u *UserRepo) GetUserById(ctx context.Context, req *user_service.GetByIdReq
 	qury := `
 		SELECT 
 			user_id,
-				username,
-				email, 
-				password,
-				full_name,
-				user_role,
-				created_at,
-				updated_at
+			username,
+			email, 
+			password,
+			full_name,
+			user_role,
+			created_at,
+			updated_at
 		FROM 
 			users 
 		WHERE
@@ -121,7 +121,12 @@ func (u *UserRepo) GetUsers(ctx context.Context, req *user_service.GetListReq) (
 	var res user_service.UserGetListResp
 	qury := `
 		SELECT 
-   			*
+			user_id,
+   			username,
+			email, 
+			password,
+			full_name,
+			user_role
 		FROM 
     		users
 		WHERE 
@@ -150,15 +155,15 @@ func (u *UserRepo) GetUsers(ctx context.Context, req *user_service.GetListReq) (
 			&resp.Email,
 			&resp.Password,
 			&resp.Fullname,
-			&resp.CreatedAt,
-			&resp.UpdatedAt,
-			&resp.DeletedAt,
 			&resp.UserRole,
 		)
+		if err != nil {
 
+			u.log.Error("err on db GetUsers", logger.Error(err))
+			return nil, err
+		}
 		res.Count++
 		res.Users = append(res.Users, &resp)
-
 
 	}
 
