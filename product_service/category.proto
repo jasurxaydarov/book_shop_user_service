@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package product_service;
+
+option go_package="product_service";
+
+message Categry {
+    int64 id = 1;
+    string name = 2;
+    string img = 3;
+}
+
+message SubCategory {
+    int64 id = 1;
+    string name = 2;
+    string img = 4;
+}

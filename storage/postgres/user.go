@@ -172,7 +172,7 @@ func (u *UserRepo) GetUsers(ctx context.Context, req *user_service.GetListReq) (
 
 func (u *UserRepo) UpdateUser(ctx context.Context, req *user_service.UserUpdateReq) (*user_service.User, error) {
 
-	time := time.Now()
+	req.UpdatedAt = time.Now().String()
 	query := `
 		UPDATE
 			users
@@ -198,7 +198,7 @@ func (u *UserRepo) UpdateUser(ctx context.Context, req *user_service.UserUpdateR
 		req.Password,
 		req.FullName,
 		req.UserRole,
-		time,
+		req.UpdatedAt,
 		req.UserId,
 	)
 	if err != nil {

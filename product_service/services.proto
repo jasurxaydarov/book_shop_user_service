@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package product_service;
+
+option go_package="product_service";
+
+message PING {
+    string msg = 1;
+}
